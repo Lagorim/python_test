@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
+from contact import Contact
 
 class TestAddContact(unittest.TestCase):
     def setUp(self):
@@ -13,13 +14,13 @@ class TestAddContact(unittest.TestCase):
         self.wd.implicitly_wait(30)
 
     
-    def test_add_contact(self):
+    def test_add_igor_contact(self):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_contact_page(wd)
-        self.create_contact(wd, firstname="Igor", lastname=
-        "Pronin")
+        self.create_contact(wd, Contact(firstname="Igor", lastname=
+        "Pronin"))
         self.logout(wd)
 
     def test_add_andrey_contact(self):
@@ -27,8 +28,8 @@ class TestAddContact(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_contact_page(wd)
-        self.create_contact(wd, firstname="Andrey", lastname=
-        "Ivanov")
+        self.create_contact(wd, Contact(firstname="Andrey", lastname=
+        "Ivanov"))
         self.logout(wd)
 
     def test_add_empty_contact(self):
@@ -36,30 +37,46 @@ class TestAddContact(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_contact_page(wd)
-        self.create_contact(wd, firstname="", lastname=
-        "")
+        self.create_contact(wd, Contact(firstname="", lastname=
+        ""))
         self.logout(wd)
     def test_add_nika_contact(self):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_contact_page(wd)
-        self.create_contact(wd, firstname="Nika", lastname=
-        "Pronina")
+        self.create_contact(wd, Contact(firstname="Nika", lastname=
+        "Pronina"))
+        self.logout(wd)
+    def test_add_igor_rus_contact(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.open_contact_page(wd)
+        self.create_contact(wd, Contact(firstname="Игорь", lastname=
+        "Пронин"))
+        self.logout(wd)
+    def test_add_nika_rus_contact(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.open_contact_page(wd)
+        self.create_contact(wd, Contact(firstname="ника", lastname=
+        "пронина"))
         self.logout(wd)
 
     def logout(self, wd):
         wd.find_element_by_link_text("Logout").click()
 
-    def create_contact(self, wd, firstname, lastname):
+    def create_contact(self, wd, contact):
         # create contact
         wd.find_element_by_name("firstname").click()
         # fill contact form
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(firstname)
+        wd.find_element_by_name("firstname").send_keys(contact.firstname)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(lastname)
+        wd.find_element_by_name("lastname").send_keys(contact.lastname)
         # submit
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
