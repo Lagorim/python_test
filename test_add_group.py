@@ -15,7 +15,6 @@ class TestAddGroup(unittest.TestCase):
 
     
     def test_add_group(self):
-        wd = self.wd
         self.login(username="admin", password="secret")
         self.create_group(Group(name="fhgfhg", header="jdhajhddh", footer="dakjdkjad"))
         self.logout()
@@ -26,10 +25,9 @@ class TestAddGroup(unittest.TestCase):
         self.logout()
 
     def test_add_igor_group(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.create_group(wd, Group(name="Igor's", header="Pronin", footer="'''"))
-        self.logout(wd)
+        self.login(username="admin", password="secret")
+        self.create_group(Group(name="Igor's", header="Pronin", footer="'''"))
+        self.logout()
 
     def logout(self):
         wd = self.wd
@@ -77,7 +75,7 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
-    def open_home_page(self, wd):
+    def open_home_page(self):
         wd = self.wd
         wd.get("http://localhost/addressbook/group.php")
 
