@@ -13,51 +13,49 @@ class TestAddContact(unittest.TestCase):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
-    
     def test_add_igor_contact(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, Contact(firstname="Igor", lastname=
+        self.login(username="admin", password="secret")
+        self.create_contact(Contact(firstname="Igor", lastname=
         "Pronin"))
-        self.logout(wd)
+        self.logout()
 
     def test_add_andrey_contact(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, Contact(firstname="Andrey", lastname=
+        self.login(username="admin", password="secret")
+        self.create_contact(Contact(firstname="Andrey", lastname=
         "Ivanov"))
-        self.logout(wd)
+        self.logout()
 
     def test_add_empty_contact(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, Contact(firstname="", lastname=
+        self.login(username="admin", password="secret")
+        self.create_contact(Contact(firstname="", lastname=
         ""))
-        self.logout(wd)
-    def test_add_nika_contact(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, Contact(firstname="Nika", lastname=
-        "Pronina"))
-        self.logout(wd)
-    def test_add_igor_rus_contact(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, Contact(firstname="Игорь", lastname=
-        "Пронин"))
-        self.logout(wd)
-    def test_add_nika_rus_contact(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, Contact(firstname="ника", lastname=
-        "пронина"))
-        self.logout(wd)
+        self.logout()
 
-    def logout(self, wd):
+    def test_add_nika_contact(self):
+        self.login(username="admin", password="secret")
+        self.create_contact(Contact(firstname="Nika", lastname=
+        "Pronina"))
+        self.logout()
+
+    def test_add_igor_rus_contact(self):
+        self.login(username="admin", password="secret")
+        self.create_contact(Contact(firstname="Игорь", lastname=
+        "Пронин"))
+        self.logout()
+
+    def test_add_nika_rus_contact(self):
+        self.login(username="admin", password="secret")
+        self.create_contact(Contact(firstname="ника", lastname=
+        "пронина"))
+        self.logout()
+
+    def logout(self):
+        wd = self.wd
         wd.find_element_by_link_text("Logout").click()
 
-    def create_contact(self, wd, contact):
-        self.open_contact_page(wd)
+    def create_contact(self, contact):
+        wd = self.wd
+        self.open_contact_page()
         # create contact
         wd.find_element_by_name("firstname").click()
         # fill contact form
@@ -69,18 +67,21 @@ class TestAddContact(unittest.TestCase):
         # submit
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-    def open_contact_page(self, wd):
+    def open_contact_page(self):
+        wd = self.wd
         wd.find_element_by_link_text("add new").click()
 
-    def login(self, wd, username, password):
-        self.open_home_page(wd)
+    def login(self, username, password):
+        wd = self.wd
+        self.open_home_page()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
-    def open_home_page(self, wd):
+    def open_home_page(self):
+        wd = self.wd
         wd.get("http://localhost/addressbook/")
 
     def is_element_present(self, how, what):
