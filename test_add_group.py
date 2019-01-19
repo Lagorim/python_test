@@ -1,35 +1,27 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+import pytest
 from group import Group
 from application import Application
 
-class TestAddGroup(unittest.TestCase):
-    def setUp(self):
-        self.app = Application
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.terminated)
+    return fixture
 
-    def test_add_group(self):
-        self.app.login(username="admin", password="secret")
-        self.app.create_group(Group(name="fhgfhg", header="jdhajhddh", footer="dakjdkjad"))
-        self.app.logout()
 
-    def test_add_empty_group(self):
-        self.app.login(username="admin", password="secret")
-        self.app.create_group(Group(name="", header="", footer=""))
-        self.app.logout()
+def test_add_group(app):
+        app.login(username="admin", password="secret")
+        app.create_group(Group(name="fhgfhg", header="jdhajhddh", footer="dakjdkjad"))
+        app.logout()
 
-    def test_add_igor_group(self):
-        self.app.login(username="admin", password="secret")
-        self.app.create_group(Group(name="Igor's", header="Pronin", footer="'''"))
-        self.app.logout()
+def test_add_empty_group(app):
+        app.login(username="admin", password="secret")
+        app.create_group(Group(name="", header="", footer=""))
+        app.logout()
 
-    def tearDown(self):
-        self.app.terminated()
+def test_add_igor_group(app):
+        app.login(username="admin", password="secret")
+        app.create_group(Group(name="Igor's", header="Pronin", footer="'''"))
+        app.logout()
 
-if __name__ == "__main__":
-    unittest.main()
