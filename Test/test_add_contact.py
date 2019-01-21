@@ -12,38 +12,38 @@ def app(request):
 
 
 def test_add_igor_contact(app):
-        app.login(username="admin", password="secret")
+        app.session_contact.login(username="admin", password="secret")
         app.create_contact(Contact(firstname="Igor", lastname=
         "Pronin"))
-        app.logout()
+        app.session_contact.logout()
 
 def test_add_andrey_contact(app):
-        app.login(username="admin", password="secret")
+        app.session_contact.login(username="admin", password="secret")
         app.create_contact(Contact(firstname="Andrey", lastname=
         "Ivanov"))
-        app.logout()
+        app.session_contact.logout()
 
 def test_add_empty_contact(app):
-        app.login(username="admin", password="secret")
+        app.session_contact.login(username="admin", password="secret")
         app.create_contact(Contact(firstname="", lastname=
         ""))
-        app.logout()
+        app.session_contact.logout()
 
 def test_add_nika_contact(app):
-        app.login(username="admin", password="secret")
+        app.session_contact.login(username="admin", password="secret")
         app.create_contact(Contact(firstname="Nika", lastname=
         "Pronina"))
-        app.logout()
+        app.session_contact.logout()
 
 def test_add_igor_rus_contact(app):
-        app.login(username="admin", password="secret")
+        app.session_contact.login(username="admin", password="secret")
         app.create_contact(Contact(firstname="Игорь", lastname=
         "Пронин"))
-        app.logout()
+        app.session_contact.logout()
 
 def test_add_nika_rus_contact(app):
-        app.login(username="admin", password="secret")
+        app.session_contact.login(username="admin", password="secret")
         app.create_contact(Contact(firstname="ника", lastname=
         "пронина"))
-        app.logout()
+        app.session_contact.logout()
 
