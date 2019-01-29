@@ -1,5 +1,5 @@
 
-class GroupHelper:
+class EditGroupHelper:
 
     def __init__(self, app):
         self.app = app
@@ -8,7 +8,7 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
 
-    def edit_first_group(self, group):
+    def edit(self, group):
         wd = self.app.wd
         self.open_groups_page()
         #select first group
