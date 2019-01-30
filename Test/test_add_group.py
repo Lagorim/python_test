@@ -17,17 +17,17 @@ def test_add_igor_group(app):
         app.group.create(Group(name="Igor", header="Pronin", footer=""))
         app.session_group.logout()
 
-def test_add_igor_group(app):
+def test_add_nikas_group(app):
         app.session_group.login(username="admin", password="secret")
         app.group.create(Group(name="Nika's", header="Pronina's", footer="Anatoly"))
         app.session_group.logout()
 
-def test_add_igor_group(app):
+def test_add_nika_group(app):
         app.session_group.login(username="admin", password="secret")
         app.group.create(Group(name="Nika", header="Pronina's", footer="Anatoly"))
         app.session_group.logout()
 
-def test_add_igor_group(app):
+def test_add_nika_s_group(app):
         app.session_group.login(username="admin", password="secret")
         app.group.create(Group(name="Nika", header="Pronina", footer="Anatoly"))
         app.session_group.logout()

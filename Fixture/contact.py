@@ -24,10 +24,6 @@ class ContactHelper:
         # submit
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-    #def return_to_home_page(self):
-        #wd = self.app.wd
-        #wd.find_element_by_link_text("home page").click()
-
     def delete_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
@@ -41,8 +37,6 @@ class ContactHelper:
     def edit(self, contact):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
-        # select first contact
-        wd.find_element_by_id("79").click()
         # edit contact
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # fill contact form
