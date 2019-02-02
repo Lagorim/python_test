@@ -4,8 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-from Fixture.session_group import SessionHelperGroup
-from Fixture.session_contact import SessionHelperContact
+from Fixture.session import SessionHelper
 from Fixture.group import GroupHelper
 from Fixture.contact import ContactHelper
 
@@ -13,8 +12,7 @@ class Application():
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
-        self.session_group = SessionHelperGroup(self)
-        self.session_contact = SessionHelperContact(self)
+        self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
 
