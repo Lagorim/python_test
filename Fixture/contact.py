@@ -38,13 +38,16 @@ class ContactHelper:
         wd.find_elements_by_css_selector("div.msgbox")
 
     def form_contact(self, contact):
+        wd = self.change_field_value("firstname", contact.firstname)
+        wd = self.change_field_value("lastname", contact.lastname)
+
+    def change_field_value(self, field_name, text):
         wd = self.app.wd
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.firstname)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.lastname)
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
+        return wd
 
     def create(self, contact):
         wd = self.app.wd
@@ -71,5 +74,15 @@ class ContactHelper:
         self.edit_contact()
         # fill contact form
         self.form_contact(contact)
+        # submit
+        self.update_contact()
+
+    def modify_first_contact(self, new_contact_data):
+        wd = self.app.wd
+        self.open_home_page()
+        # edit contact
+        self.edit_contact()
+        # fill contact form
+        self.form_contact(new_contact_data)
         # submit
         self.update_contact()
