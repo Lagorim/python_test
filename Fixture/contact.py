@@ -1,3 +1,5 @@
+from Model_class.contact import Contact
+
 
 class ContactHelper:
 
@@ -92,3 +94,14 @@ class ContactHelper:
         self.form_contact(new_contact_data)
         # submit
         self.update_contact()
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.open_home_page()
+        contacts = []
+        for element in wd.find_elements_by_name("entry"):
+            cells = element.find_elements_by_tag_name("td")
+            text = cells[2].text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            contacts.append(Contact(firstname=text, id=id))
+        return contacts
