@@ -64,6 +64,7 @@ class ContactHelper:
         self.form_contact(contact)
         # submit
         self.submit_contact()
+        self.contact_cache = None
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -74,6 +75,7 @@ class ContactHelper:
         self.delete_contact()
         wd.switch_to_alert().accept()
         self.message_delete_contact()
+        self.contact_cache = None
 
     def edit(self, contact):
         wd = self.app.wd
@@ -94,14 +96,18 @@ class ContactHelper:
         self.form_contact(new_contact_data)
         # submit
         self.update_contact()
+        self.contact_cache = None
+
+    contact_cache = None
 
     def get_contact_list(self):
-        wd = self.app.wd
-        self.open_home_page()
-        contacts = []
-        for element in wd.find_elements_by_name("entry"):
-            cells = element.find_elements_by_tag_name("td")
-            text = cells[2].text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(firstname=text, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_home_page()
+            self.contact_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                cells = element.find_elements_by_tag_name("td")
+                text = cells[2].text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(firstname=text, id=id))
+        return list(self.contact_cache)
